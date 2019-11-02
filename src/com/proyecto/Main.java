@@ -1,15 +1,10 @@
 package com.proyecto;
 
-import javax.naming.InitialContext;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.proyecto.admin.Admin;
 import com.proyecto.admin.utils.Alert;
-import com.proyecto.porotos.RolBeanRemote;
-import com.proyecto.porotos.UsuarioBeanRemote;
-
-
 
 public class Main {
 
@@ -29,13 +24,6 @@ public class Main {
 
 		Admin  p = new Admin();
 		p.show();
-
-		try {
-			RolBeanRemote rolBean = (RolBeanRemote) InitialContext.doLookup("ProyectoPorotos/RolBean!com.proyecto.porotos.RolBeanRemote");
-			UsuarioBeanRemote mrBean = (UsuarioBeanRemote) InitialContext.doLookup("ProyectoPorotos/UsuarioBean!com.proyecto.porotos.UsuarioBeanRemote");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 }

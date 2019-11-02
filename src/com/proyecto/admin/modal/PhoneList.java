@@ -18,9 +18,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
 import com.proyecto.admin.SharedResources;
-import com.proyecto.admin.mockup.entities.Fenomeno;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
+import com.proyecto.entidades.Fenomeno;
 
 // TODO Add phone to table
 // TODO Remove phone from table

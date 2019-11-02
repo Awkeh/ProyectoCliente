@@ -17,8 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.proyecto.admin.SharedResources;
-import com.proyecto.admin.mockup.entities.Fenomeno;
 import com.proyecto.admin.modal.PhoneList;
+import com.proyecto.entidades.Fenomeno;
 
 public class PhenomenaScreen extends Screen {
 

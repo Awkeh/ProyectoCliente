@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,10 +18,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.proyecto.admin.SharedResources;
-import com.proyecto.admin.db.DBManager;
-import com.proyecto.admin.mockup.entities.Usuario;
+import com.proyecto.admin.db.RoleManager;
+import com.proyecto.admin.db.UserManager;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
+import com.proyecto.entidades.Rol;
+import com.proyecto.entidades.Usuario;
 
 public class UsersScreen extends Screen {
 
@@ -59,10 +62,15 @@ public class UsersScreen extends Screen {
 		fieldSurname = new JTextField();
 		fieldEmail = new JTextField();
 
+		List<Rol> roles = RoleManager.getRoles();
+
 		selectRoles = new JComboBox<String>();
-		selectRoles.addItem("Administrador");
-		selectRoles.addItem("Experto");
-		selectRoles.addItem("Voluntario");
+
+		if(roles != null) {
+			for(int x = 0; x < roles.size(); x++)
+				selectRoles.addItem(roles.get(x).getNombre());
+		}
+
 
 		btnLoad = new JButton("Cargar");
 		btnSave = new JButton("Guardar");
@@ -182,7 +190,8 @@ public class UsersScreen extends Screen {
 		btnLoad.addActionListener(
 			new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					loadUser();
+					if(!fieldUser.getText().trim().isEmpty())
+						loadUser(StringUtils.sanitize(fieldUser.getText()));
 				}
 			}
 		);
@@ -204,20 +213,15 @@ public class UsersScreen extends Screen {
 		);
 	}
 
-	private void loadUser() {
-		user = DBManager.searchUser();
-
-		String[] classSplits = user.getClass().toString().split("\\.");
-		String rol = classSplits[classSplits.length - 1];
-
-		Alert.warn("???", "Y que queres que te cargue pelotudo, si no hay entidades.\nAhi te cargo un pato la concha de tu vieja");
+	private void loadUser(String nick) {
+		user = UserManager.findUser(nick);
 
 		fieldId.setText("" + user.getId());
 		fieldUser.setText(user.getUsuario());
 		fieldName.setText(user.getNombre());
 		fieldSurname.setText(user.getApellido());
 		fieldEmail.setText(user.getEmail());
-		selectRoles.getModel().setSelectedItem(rol);
+		selectRoles.getModel().setSelectedItem(user.getRol().getNombre());
 	}
 
 	private void saveUser() {
@@ -277,16 +281,19 @@ public class UsersScreen extends Screen {
 			user.setApellido(fieldSurname.getText());
 			user.setEmail(fieldEmail.getText());
 
+			// TODO: set user rol
+			// TODO: set whether user's active
+
 			if(!fieldId.getText().isEmpty()) {
 				user.setId(Long.valueOf(fieldId.getText()));
 
-				if(DBManager.updateUser(user))
-					Alert.info("Exito", "El usuario fue actualizado correctamente");
+				UserManager.updateUser(user);
+				Alert.info("Exito", "El usuario fue actualizado correctamente (se supone)");
 			}
 
 			else {
-				if(DBManager.insertUser(user))
-					Alert.info("Exito", "El usuario fue agregado correctamente");
+				UserManager.createUser(user.getUsuario(), user.getNombre(), user.getApellido(), user.getEmail(), user.getRol(), user.isActivo());
+				Alert.info("Exito", "El usuario fue agregado correctamente (se supone)");
 			}
 		}
 	}
