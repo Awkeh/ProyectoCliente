@@ -24,3 +24,6 @@ hs_err_pid*
 
 # the whole compiled thing
 /bin
+
+# psd files
+*.psd
