@@ -71,7 +71,6 @@ public class UsersScreen extends Screen {
 				selectRoles.addItem(roles.get(x).getNombre());
 		}
 
-
 		btnLoad = new JButton("Cargar");
 		btnSave = new JButton("Guardar");
 		btnClear = new JButton("Limpiar");
