@@ -4,7 +4,12 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.proyecto.admin.Admin;
+import com.proyecto.admin.db.RoleManager;
 import com.proyecto.admin.utils.Alert;
+<<<<<<< HEAD
+=======
+import com.proyecto.entidades.Rol;
+>>>>>>> refs/heads/Negro
 
 public class Main {
 
@@ -13,14 +18,18 @@ public class Main {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
-			Alert.error("????", UIManager.getSystemLookAndFeelClassName() + "? Quien te conoce papa");
+			Alert.error("ERROR", UIManager.getSystemLookAndFeelClassName() + ": No existe la clase");
 		} catch (InstantiationException e) {
-			Alert.error("Error", "Rompiste todo wacho, que onda?");
+			Alert.error("ERROR", "No se pudo crear la instancia");
 		} catch (IllegalAccessException e) {
-			Alert.warn("El programa se puso lagorra", "Date la vuelta y pone las manos en la espalda");
+			Alert.warn("ADVERTENCIA", e.getMessage());
 		} catch (UnsupportedLookAndFeelException e) {
-			Alert.error("El LAF del sistema se hace el cheto", "Este programa de mierda no soporta el look and feel del sistema");
+			Alert.error("ERROR", "Este programa no soporta el look and feel del sistema");
 		}
+
+		RoleManager.create("Administrador", Integer.MAX_VALUE);
+		RoleManager.create("Experto", 65472);
+		RoleManager.create("Voluntario", Rol.ALTA_OBSERVACION | Rol.ALTA_TELEFONO | Rol.MODIFICAR_TELEFONO | Rol.BAJA_TELEFONO);
 
 		Admin  p = new Admin();
 		p.show();
