@@ -6,10 +6,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.proyecto.admin.Admin;
 import com.proyecto.admin.db.RoleManager;
 import com.proyecto.admin.utils.Alert;
-<<<<<<< HEAD
-=======
 import com.proyecto.entidades.Rol;
->>>>>>> refs/heads/Negro
 
 public class Main {
 
