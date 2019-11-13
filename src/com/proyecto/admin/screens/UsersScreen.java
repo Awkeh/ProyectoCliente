@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.proyecto.admin.SharedResources;
@@ -29,10 +30,11 @@ import com.proyecto.entidades.Usuario;
 public class UsersScreen extends Screen {
 
 	private static final long serialVersionUID = 1L;
-	private JTabbedPane tabbyBoi;
-	private JPanel userFormPane, userListPane, btnGroup;
+
+	private JPanel userFormPane, btnGroup;
 	private JLabel labId, labRol, labUser, labName, labSurname, labEmail;
 	private JTextField fieldId, fieldUser, fieldName, fieldSurname, fieldEmail;
+	private JCheckBox cbActive;
 	private JComboBox<String> selectRoles;
 	private JButton btnLoad, btnSave, btnClear;
 	private Usuario user;
@@ -46,9 +48,7 @@ public class UsersScreen extends Screen {
 	}
 
 	private void initializeComponents() {
-		tabbyBoi = new JTabbedPane();
 		userFormPane = new JPanel(new GridBagLayout());
-		userListPane = new JPanel();
 		btnGroup = new JPanel();
 
 		labId = new JLabel("ID");
@@ -63,6 +63,8 @@ public class UsersScreen extends Screen {
 		fieldName = new JTextField();
 		fieldSurname = new JTextField();
 		fieldEmail = new JTextField();
+
+		cbActive = new JCheckBox("Activo");
 
 		roles = RoleManager.getAll();
 		selectRoles = new JComboBox<String>();
@@ -91,6 +93,9 @@ public class UsersScreen extends Screen {
 		labSurname.setFont(f);
 		labEmail.setFont(f);
 
+		cbActive.setFont(f);
+		cbActive.setHorizontalTextPosition(SwingConstants.LEFT);
+
 		fieldId.setFont(f);
 		fieldId.setEnabled(false);
 		fieldUser.setFont(f);
@@ -106,10 +111,7 @@ public class UsersScreen extends Screen {
 	}
 
 	private void layoutComponents() {
-		add(tabbyBoi);
-
-		tabbyBoi.addTab("ABM de usuarios", userFormPane);
-		tabbyBoi.addTab("Lista de usuarios", userListPane);
+		add(userFormPane);
 
 		btnGroup.add(btnLoad);
 		btnGroup.add(btnSave);
@@ -169,20 +171,28 @@ public class UsersScreen extends Screen {
 		c.gridwidth = 3;
 		userFormPane.add(fieldEmail, c);
 
+		c.weightx = 7/8d;
 		c.gridx = 0;
 		c.gridy = 1;
-		c.gridwidth = 4;
+		c.gridwidth = 2;
 		userFormPane.add(selectRoles, c);
+
+		// Checkbox constraints
+		c.anchor = GridBagConstraints.CENTER;
+		c.fill = GridBagConstraints.NONE;
+		c.weightx = 1/8d;
+		c.gridx = 2;
+		c.gridy = 1;
+		c.gridwidth = 2;
+		userFormPane.add(cbActive, c);
 
 		// Button group constraints
 		c.anchor = GridBagConstraints.EAST;
-		c.fill = GridBagConstraints.NONE;
 		c.gridwidth = 4;
 		c.gridy = 4;
 		c.weightx = 1;
 		c.gridx = 0;
 		userFormPane.add(btnGroup, c);
-
 	}
 
 	private void addListenersToComponents() {
@@ -220,6 +230,7 @@ public class UsersScreen extends Screen {
 		fieldSurname.setText(user.getApellido());
 		fieldEmail.setText(user.getEmail());
 		selectRoles.getModel().setSelectedItem(user.getRol().getNombre());
+		cbActive.setSelected(user.isActivo());
 	}
 
 	private void saveUser() {
@@ -295,8 +306,7 @@ public class UsersScreen extends Screen {
 					}
 				}).get()
 			);
-			// TODO: add field to set whether the user is active
-			user.setActivo(true);
+			user.setActivo(cbActive.isSelected());
 
 			if(!fieldId.getText().isEmpty()) {
 				user.setId(Long.valueOf(fieldId.getText()));
@@ -323,6 +333,7 @@ public class UsersScreen extends Screen {
 		fieldSurname.setText("");
 		fieldEmail.setText("");
 		selectRoles.getModel().setSelectedItem(selectRoles.getItemAt(0));
+		cbActive.setSelected(false);
 	}
 
 }
