@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,9 +19,10 @@ import javax.swing.border.EmptyBorder;
 
 import com.proyecto.admin.SharedResources;
 import com.proyecto.admin.db.DBManager;
-import com.proyecto.admin.mockup.entities.Usuario;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
+
+import com.proyecto.entidades.*;
 
 public class UsersScreen extends Screen {
 
@@ -32,6 +34,7 @@ public class UsersScreen extends Screen {
 	private JComboBox<String> selectRoles;
 	private JButton btnLoad, btnSave, btnClear;
 	private Usuario user;
+	private List<Rol> roles;
 
 	public UsersScreen() {
 		initializeComponents();
@@ -58,11 +61,12 @@ public class UsersScreen extends Screen {
 		fieldName = new JTextField();
 		fieldSurname = new JTextField();
 		fieldEmail = new JTextField();
-
+		
+		roles = DBManager.getRoles();
 		selectRoles = new JComboBox<String>();
-		selectRoles.addItem("Administrador");
-		selectRoles.addItem("Experto");
-		selectRoles.addItem("Voluntario");
+		for (Rol r: roles) {
+			selectRoles.addItem(r.getNombre());
+		}
 
 		btnLoad = new JButton("Cargar");
 		btnSave = new JButton("Guardar");
@@ -176,6 +180,7 @@ public class UsersScreen extends Screen {
 		c.weightx = 1;
 		c.gridx = 0;
 		userFormPane.add(btnGroup, c);
+		
 	}
 
 	private void addListenersToComponents() {
@@ -276,6 +281,9 @@ public class UsersScreen extends Screen {
 			user.setNombre(fieldName.getText());
 			user.setApellido(fieldSurname.getText());
 			user.setEmail(fieldEmail.getText());
+			//Alert.info("Permisos"," "+DBManager.getRol("Administrador").getId());
+			user.setRol(DBManager.getRol(selectRoles.getSelectedItem().toString()));
+			user.setActivo(true);
 
 			if(!fieldId.getText().isEmpty()) {
 				user.setId(Long.valueOf(fieldId.getText()));

@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
 import com.proyecto.admin.SharedResources;
-import com.proyecto.admin.mockup.entities.Fenomeno;
+import com.proyecto.entidades.Fenomeno;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
 
@@ -31,9 +31,9 @@ public class PhoneList extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] HEADER = {
-		"ID",
-		"Telefono"
-	};
+			"ID",
+			"Telefono"
+		};
 	private static final int PHONE_COL_ID = 1;
 
 	private JScrollPane root;
@@ -43,15 +43,13 @@ public class PhoneList extends JDialog {
 	private Object[][] data;
 	private JTextField fieldPhone;
 	private JButton btnAdd;
-	private Fenomeno phenom;
 	private String valueBeforeEditing = "";
 	private int lastRowSelected = 0;
 
 	public PhoneList(Fenomeno f) {
-		phenom = f;
 
 		initializeComponents();
-		customizeComponents();
+		customizeComponents(f);
 		layoutComponents();
 		addListenersToComponents();
 
@@ -69,7 +67,7 @@ public class PhoneList extends JDialog {
 		for(int row = 0; row < data.length; row++) {
 			data[row] = new Object[] {
 				"" + (1 + row),
-				"" + (90_000_000 + r.nextInt(99_99_999))
+				""// + (90_000_000 + r.nextInt(99_99_999))
 			};
 		}
 
@@ -81,10 +79,10 @@ public class PhoneList extends JDialog {
 		btnAdd = new JButton("Agregar");
 	}
 
-	private void customizeComponents() {
+	private void customizeComponents(Fenomeno ph) {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setTitle("Telefonos para " + phenom.getNombre());
+		setTitle("Telefonos para " + ph.getNombre());
 		setModal(true);
 		setLayout(new BorderLayout());
 
@@ -134,9 +132,9 @@ public class PhoneList extends JDialog {
 						// Quality bug fixing
 						if(val.trim().isEmpty()) {
 							// TODO delete phone from DB
-							Alert.info("", "Si, borrar el telefono, bla bla bla. No jodas");
+							Alert.info("", "Telefono borrado");
 						} else {
-							Alert.warn("Que se yo, necesito dormir", "El telefono ingresado no es valido");
+							Alert.warn("Telefono invalido", "El telefono ingresado no es valido");
 							table.setValueAt(valueBeforeEditing, lastRowSelected, PHONE_COL_ID);
 						}
 					}

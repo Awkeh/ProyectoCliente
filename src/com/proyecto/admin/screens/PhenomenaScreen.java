@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,8 +18,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.proyecto.admin.SharedResources;
-import com.proyecto.admin.mockup.entities.Fenomeno;
+import com.proyecto.admin.db.DBManager;
 import com.proyecto.admin.modal.PhoneList;
+import com.proyecto.admin.utils.Alert;
+import com.proyecto.admin.utils.StringUtils;
+
+import com.proyecto.entidades.Fenomeno;
+import com.proyecto.entidades.Caracteristica;
+import com.proyecto.entidades.Telefono;
 
 public class PhenomenaScreen extends Screen {
 
@@ -170,6 +177,41 @@ public class PhenomenaScreen extends Screen {
 				}
 			}
 		);
+		btnSave.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						phenomenaSave();
+					}
+				}
+			);
+		btnChar.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						loadCharact();
+					}
+				}
+			);
 	}
-
+	private void phenomenaSave() {
+		if (fieldName.getText().trim().isEmpty()) {
+			Alert.warn("Campo nombre vacio", "Debe ingresar un nombre");
+		}
+		else if (fieldDesc.getText().trim().isEmpty()) {
+			Alert.warn("Campo descripcion vacio", "Debe ingresar una descripcion");
+		}
+		else if (!StringUtils.isNameValid(fieldName.getText())) {
+			Alert.warn("Nombre invalido", "Ingrese un nombre valido");
+		}
+		else {
+			phenom.setNombre(fieldName.getText());
+			phenom.setDescripcion(fieldDesc.getText());
+			phenom.setTelefonos(new ArrayList<Telefono>());
+			phenom.setCaracteristicas(new ArrayList<Caracteristica>());
+			DBManager.insertPhenomena(phenom);
+		}
+	}
+	private void loadCharact() {
+		
+		DBManager.getCharact();
+	}
 }
