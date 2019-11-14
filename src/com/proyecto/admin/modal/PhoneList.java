@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,9 +17,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
 import com.proyecto.admin.SharedResources;
-import com.proyecto.entidades.Fenomeno;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
+import com.proyecto.entidades.Fenomeno;
 
 // TODO Add phone to table
 // TODO Remove phone from table
@@ -61,8 +60,6 @@ public class PhoneList extends JDialog {
 
 		//data = new Object[phenom.getTelefonos().size()][4];
 		data = new Object[20][4];
-
-		Random r = new Random();
 
 		for(int row = 0; row < data.length; row++) {
 			data[row] = new Object[] {

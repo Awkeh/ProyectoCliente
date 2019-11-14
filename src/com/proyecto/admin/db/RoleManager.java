@@ -39,55 +39,52 @@ public class RoleManager {
 		findBeanifNull();
 
 		try {
-			bean.crearRol(name, permissions);
-			return true;
+			return bean.create(name, permissions);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 
-	public static boolean update(String roleName, int newPermissions) {
+	public static Rol update(String roleName, int newPermissions) {
 		findBeanifNull();
 
 		try {
-			bean.modificarRol(roleName, newPermissions);
-			return true;
+			return bean.update(roleName, newPermissions);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return false;
 		}
+		return null;
 	}
 
-	public static boolean find(String name) {
+	public static Rol find(String name) {
 		findBeanifNull();
 
 		try {
-			bean.buscarRol(name);
-			return true;
+			return bean.find(name);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return false;
 		}
+		return null;
 	}
 
 	public static List<Rol> getAll() {
 		findBeanifNull();
 
 		try {
-			return bean.obtenerRoles();
+			return bean.getAll();
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 
 }

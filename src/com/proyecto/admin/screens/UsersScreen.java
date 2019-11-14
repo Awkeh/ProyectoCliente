@@ -224,6 +224,9 @@ public class UsersScreen extends Screen {
 	private void loadUser() {
 		user = UserManager.find(fieldUser.getText());
 
+		if(user == null)
+			user = new Usuario();
+
 		fieldId.setText("" + user.getId());
 		fieldUser.setText(user.getUsuario());
 		fieldName.setText(user.getNombre());
@@ -311,17 +314,26 @@ public class UsersScreen extends Screen {
 			if(!fieldId.getText().isEmpty()) {
 				user.setId(Long.valueOf(fieldId.getText()));
 
-				if(UserManager.update(oldUser, user)) {
-					Alert.info("Exito", "El usuario fue actualizado correctamente");
+				Usuario u = UserManager.update(oldUser,  user);
 
-					user = UserManager.find(user.getUsuario());
-					fieldId.setText("" + user.getId());
+				if(u != null) {
+					fieldId.setText("" + u.getId());
+					user = u;
+					Alert.info("Exito", "El usuario fue actualizado correctamente");
 				}
 			}
 
 			else {
-				if(UserManager.create(user))
+				if(UserManager.create(user)) {
+					Usuario u = UserManager.find(user.getUsuario());
+
+					if(u != null) {
+						fieldId.setText("" + u.getId());
+						user = u;
+					}
+
 					Alert.info("Exito", "El usuario fue agregado correctamente");
+				}
 			}
 		}
 	}

@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.proyecto.admin.SharedResources;
+import com.proyecto.admin.db.PhenoManager;
 import com.proyecto.admin.modal.PhoneList;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
@@ -170,28 +171,50 @@ public class PhenomenaScreen extends Screen {
 		btnTel.addActionListener(
 			new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new PhoneList(phenom);
-					System.out.println(phenom.getTelefonos().size());
-					System.gc();
+					showPhoneDialog();
 				}
 			}
 		);
+
+		btnLoad.addActionListener(
+			new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					loadPhenomena();
+				}
+			}
+		);
+
 		btnSave.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						phenomenaSave();
-					}
+			new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					savePhenomena();
 				}
-			);
+			}
+		);
+
 		btnChar.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						loadCharact();
-					}
+			new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					showCharDialog();
 				}
-			);
+			}
+		);
 	}
-	private void phenomenaSave() {
+
+	private void loadPhenomena() {
+		if(!fieldName.getText().trim().isEmpty()) {
+			phenom = PhenoManager.find(fieldName.getText());
+
+			if(phenom != null) {
+				fieldId.setText("" + phenom.getId());
+				fieldName.setText(phenom.getNombre());
+				fieldDesc.setText(phenom.getDescripcion());
+			}
+		}
+	}
+
+	private void savePhenomena() {
+		// TODO: add thorough validation
 		if (fieldName.getText().trim().isEmpty()) {
 			Alert.warn("Campo nombre vacio", "Debe ingresar un nombre");
 		}
@@ -202,15 +225,45 @@ public class PhenomenaScreen extends Screen {
 			Alert.warn("Nombre invalido", "Ingrese un nombre valido");
 		}
 		else {
+			String oldName = phenom.getNombre();
 			phenom.setNombre(fieldName.getText());
 			phenom.setDescripcion(fieldDesc.getText());
-			phenom.setTelefonos(new ArrayList<Telefono>());
-			phenom.setCaracteristicas(new ArrayList<Caracteristica>());
-//			DBManager.insertPhenomena(phenom); FIXME: add phenomena manager
+
+			if(fieldId.getText().isEmpty()) {
+
+				phenom.setTelefonos(null);
+				phenom.setCaracteristicas(null);
+
+				if(PhenoManager.create(phenom)) {
+					Fenomeno f = PhenoManager.find(phenom.getNombre());
+
+					if(f != null) {
+						fieldId.setText("" + f.getId());
+						phenom = f;
+						Alert.info("Exito", "Fenomeno creado con exito");
+					}
+				}
+			}
+			else {
+				Fenomeno f = PhenoManager.update(oldName, phenom);
+
+				if(f != null) {
+					Alert.info("Exito", "Fenomeno actualizado con exito");
+					fieldId.setText("" + f.getId());
+					phenom = f;
+				}
+			}
+
 		}
 	}
-	private void loadCharact() {
 
-//		DBManager.getCharact();
+	private void showPhoneDialog() {
+		new PhoneList(phenom);
+		System.out.println(phenom.getTelefonos().size());
+		System.gc();
+	}
+
+	private void showCharDialog() {
+		System.gc();
 	}
 }

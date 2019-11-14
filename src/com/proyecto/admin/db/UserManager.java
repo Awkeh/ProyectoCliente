@@ -37,41 +37,39 @@ public class UserManager {
 		findBeanifNull();
 
 		try {
-			bean.crear(u);
-			return true;
+			return bean.create(u);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 
-	public static boolean update(String user, Usuario u) {
+	public static Usuario update(String user, Usuario u) {
 		findBeanifNull();
 
 		try {
-			bean.modificar(user, u);
-			return true;
+			return bean.update(user, u);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return false;
 		}
+		return null;
 	}
 
 	public static Usuario find(String user) {
 		findBeanifNull();
 
 		try {
-			return bean.buscar(user);
+			return bean.find(user);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 
 }

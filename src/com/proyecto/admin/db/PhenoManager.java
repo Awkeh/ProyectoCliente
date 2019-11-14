@@ -43,8 +43,7 @@ public class PhenoManager {
 		findBeanifNull();
 
 		try {
-			bean.create(f);
-			return true;
+			return bean.create(f);
 		}
 		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -53,17 +52,16 @@ public class PhenoManager {
 		}
 	}
 
-	public static boolean update(String name, Fenomeno f) {
+	public static Fenomeno update(String name, Fenomeno f) {
 		findBeanifNull();
 
 		try {
-			bean.update(name, f);
-			return true;
+			return bean.update(name, f);
 		}
 		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 
