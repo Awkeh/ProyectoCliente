@@ -6,12 +6,16 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.proyecto.admin.utils.Alert;
-import com.proyecto.entidades.Rol;
-import com.proyecto.porotos.RolBeanRemote;
+import com.proyecto.entidades.Fenomeno;
+import com.proyecto.porotos.FenomenoBeanRemote;
 
-public class RoleManager {
+/**
+ * Phenomena manager class
+ *
+ */
+public class PhenoManager {
 
-	private static RolBeanRemote bean = null;
+	private static FenomenoBeanRemote bean = null;
 
 	private static boolean isBeanGTG() {
 		return bean != null;
@@ -19,7 +23,7 @@ public class RoleManager {
 
 	private static boolean findBean() {
 		try {
-			bean = (RolBeanRemote) InitialContext.doLookup("ProyectoPorotos/RolBean!com.proyecto.porotos.RolBeanRemote");
+			bean = (FenomenoBeanRemote) InitialContext.doLookup("ProyectoPorotos/FenomenoBean!com.proyecto.porotos.FenomenoBeanRemote");
 			return true;
 		}
 		catch (NamingException ne) {
@@ -35,55 +39,54 @@ public class RoleManager {
 		}
 	}
 
-	public static boolean create(String name, int permissions) {
+	public static boolean create(Fenomeno f) {
 		findBeanifNull();
 
 		try {
-			bean.crearRol(name, permissions);
+			bean.create(f);
 			return true;
 		}
-		catch (Exception e) {
+		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	public static boolean update(String roleName, int newPermissions) {
+	public static boolean update(String name, Fenomeno f) {
 		findBeanifNull();
 
 		try {
-			bean.modificarRol(roleName, newPermissions);
+			bean.update(name, f);
 			return true;
 		}
-		catch (Exception e) {
+		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	public static boolean find(String name) {
+	public static Fenomeno find(String name) {
 		findBeanifNull();
 
 		try {
-			bean.buscarRol(name);
-			return true;
+			return bean.find(name);
 		}
-		catch (Exception e) {
+		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 
-	public static List<Rol> getAll() {
+	public static List<Fenomeno> getAll() {
 		findBeanifNull();
 
 		try {
-			return bean.obtenerRoles();
+			return bean.getAll();
 		}
-		catch (Exception e) {
+		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
 			e.printStackTrace();
 			return null;

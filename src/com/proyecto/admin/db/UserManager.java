@@ -9,40 +9,67 @@ import com.proyecto.porotos.UsuarioBeanRemote;
 
 public class UserManager {
 
-	public static boolean create(Usuario u) {
+	private static UsuarioBeanRemote bean = null;
+
+	private static boolean isBeanGTG() {
+		return bean != null;
+	}
+
+	private static boolean findBean() {
 		try {
-			UsuarioBeanRemote bean = (UsuarioBeanRemote) InitialContext.doLookup("ProyectoPorotos/UsuarioBean!com.proyecto.porotos.UsuarioBeanRemote");
-			bean.crear(u);
+			bean = (UsuarioBeanRemote) InitialContext.doLookup("ProyectoPorotos/UsuarioBean!com.proyecto.porotos.UsuarioBeanRemote");
 			return true;
 		}
 		catch (NamingException ne) {
 			Alert.error("Error", ne.getMessage());
 			ne.printStackTrace();
+			return false;
+		}
+	}
+
+	private static void findBeanifNull() {
+		if(!isBeanGTG()) {
+			findBean();
+		}
+	}
+
+	public static boolean create(Usuario u) {
+		findBeanifNull();
+
+		try {
+			bean.crear(u);
+			return true;
+		}
+		catch (Exception e) {
+			Alert.error("Error", e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}
 
 	public static boolean update(String user, Usuario u) {
+		findBeanifNull();
+
 		try {
-			UsuarioBeanRemote bean = (UsuarioBeanRemote) InitialContext.doLookup("ProyectoPorotos/UsuarioBean!com.proyecto.porotos.UsuarioBeanRemote");
 			bean.modificar(user, u);
 			return true;
 		}
-		catch (NamingException ne) {
-			Alert.error("Error", ne.getMessage());
-			ne.printStackTrace();
+		catch (Exception e) {
+			Alert.error("Error", e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}
 
 	public static Usuario find(String user) {
+		findBeanifNull();
+
 		try {
-			UsuarioBeanRemote bean = (UsuarioBeanRemote) InitialContext.doLookup("ProyectoPorotos/UsuarioBean!com.proyecto.porotos.UsuarioBeanRemote");
 			return bean.buscar(user);
 		}
-		catch (NamingException ne) {
-			Alert.error("Error", ne.getMessage());
-			ne.printStackTrace();
+		catch (Exception e) {
+			Alert.error("Error", e.getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}
