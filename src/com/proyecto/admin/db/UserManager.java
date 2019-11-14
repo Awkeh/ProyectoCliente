@@ -15,15 +15,13 @@ public class UserManager {
 		return bean != null;
 	}
 
-	private static boolean findBean() {
+	private static void findBean() {
 		try {
 			bean = (UsuarioBeanRemote) InitialContext.doLookup("ProyectoPorotos/UsuarioBean!com.proyecto.porotos.UsuarioBeanRemote");
-			return true;
 		}
 		catch (NamingException ne) {
 			Alert.error("Error", ne.getMessage());
 			ne.printStackTrace();
-			return false;
 		}
 	}
 

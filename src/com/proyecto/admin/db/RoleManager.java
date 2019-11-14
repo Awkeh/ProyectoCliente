@@ -17,15 +17,13 @@ public class RoleManager {
 		return bean != null;
 	}
 
-	private static boolean findBean() {
+	private static void findBean() {
 		try {
 			bean = (RolBeanRemote) InitialContext.doLookup("ProyectoPorotos/RolBean!com.proyecto.porotos.RolBeanRemote");
-			return true;
 		}
 		catch (NamingException ne) {
 			Alert.error("Error", ne.getMessage());
 			ne.printStackTrace();
-			return false;
 		}
 	}
 

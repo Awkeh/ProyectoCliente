@@ -7,7 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,8 +23,6 @@ import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
 
 import com.proyecto.entidades.Fenomeno;
-import com.proyecto.entidades.Caracteristica;
-import com.proyecto.entidades.Telefono;
 
 public class PhenomenaScreen extends Screen {
 
@@ -229,10 +226,12 @@ public class PhenomenaScreen extends Screen {
 			phenom.setNombre(fieldName.getText());
 			phenom.setDescripcion(fieldDesc.getText());
 
+			// FIXME: Creating / updating Phenomenas will throw persistence errors caused by the relations of the entity. It has been tested, there's no doubt. But There's no explanation as to why exactly the relations cause this persistence exception
+
 			if(fieldId.getText().isEmpty()) {
 
-				phenom.setTelefonos(null);
-				phenom.setCaracteristicas(null);
+//				phenom.setTelefonos(null);
+//				phenom.setCaracteristicas(null);
 
 				if(PhenoManager.create(phenom)) {
 					Fenomeno f = PhenoManager.find(phenom.getNombre());
