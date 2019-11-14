@@ -10,7 +10,7 @@ import com.proyecto.entidades.Caracteristica;
 import com.proyecto.entidades.TipoDato;
 import com.proyecto.porotos.CaracteristicaBeanRemote;
 
-public class CharManager {
+public class CharacteristicManager {
 
 	private static CaracteristicaBeanRemote bean = null;
 

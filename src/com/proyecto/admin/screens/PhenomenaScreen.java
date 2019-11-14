@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.proyecto.admin.SharedResources;
-import com.proyecto.admin.db.PhenoManager;
+import com.proyecto.admin.db.PhenomenaManager;
 import com.proyecto.admin.modal.PhoneList;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
@@ -200,7 +200,7 @@ public class PhenomenaScreen extends Screen {
 
 	private void loadPhenomena() {
 		if(!fieldName.getText().trim().isEmpty()) {
-			phenom = PhenoManager.find(fieldName.getText());
+			phenom = PhenomenaManager.find(fieldName.getText());
 
 			if(phenom != null) {
 				fieldId.setText("" + phenom.getId());
@@ -233,8 +233,8 @@ public class PhenomenaScreen extends Screen {
 //				phenom.setTelefonos(null);
 //				phenom.setCaracteristicas(null);
 
-				if(PhenoManager.create(phenom)) {
-					Fenomeno f = PhenoManager.find(phenom.getNombre());
+				if(PhenomenaManager.create(phenom)) {
+					Fenomeno f = PhenomenaManager.find(phenom.getNombre());
 
 					if(f != null) {
 						fieldId.setText("" + f.getId());
@@ -244,7 +244,7 @@ public class PhenomenaScreen extends Screen {
 				}
 			}
 			else {
-				Fenomeno f = PhenoManager.update(oldName, phenom);
+				Fenomeno f = PhenomenaManager.update(oldName, phenom);
 
 				if(f != null) {
 					Alert.info("Exito", "Fenomeno actualizado con exito");

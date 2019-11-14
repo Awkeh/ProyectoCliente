@@ -13,7 +13,7 @@ import com.proyecto.porotos.FenomenoBeanRemote;
  * Phenomena manager class
  *
  */
-public class PhenoManager {
+public class PhenomenaManager {
 
 	private static FenomenoBeanRemote bean = null;
 
