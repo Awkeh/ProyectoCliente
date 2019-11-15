@@ -1,41 +1,24 @@
 package com.proyecto.admin.db;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
+import com.proyecto.admin.lang.BeanNotFoundException;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.entidades.Usuario;
 import com.proyecto.porotos.UsuarioBeanRemote;
 
 public class UserManager {
 
-	private static UsuarioBeanRemote bean = null;
-
-	private static boolean isBeanGTG() {
-		return bean != null;
-	}
-
-	private static void findBean() {
+	private static UsuarioBeanRemote getBean() {
 		try {
-			bean = (UsuarioBeanRemote) InitialContext.doLookup("ProyectoPorotos/UsuarioBean!com.proyecto.porotos.UsuarioBeanRemote");
+			return BeanManager.get(UsuarioBeanRemote.class);
+		} catch (BeanNotFoundException e) {
+			e.printStackTrace();
 		}
-		catch (NamingException ne) {
-			Alert.error("Error", ne.getMessage());
-			ne.printStackTrace();
-		}
-	}
-
-	private static void findBeanifNull() {
-		if(!isBeanGTG()) {
-			findBean();
-		}
+		return null;
 	}
 
 	public static boolean create(Usuario u) {
-		findBeanifNull();
-
 		try {
-			return bean.create(u);
+			return getBean().create(u);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -45,10 +28,8 @@ public class UserManager {
 	}
 
 	public static Usuario update(String user, Usuario u) {
-		findBeanifNull();
-
 		try {
-			return bean.update(user, u);
+			return getBean().update(user, u);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -58,10 +39,8 @@ public class UserManager {
 	}
 
 	public static Usuario find(String user) {
-		findBeanifNull();
-
 		try {
-			return bean.find(user);
+			return getBean().find(user);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());

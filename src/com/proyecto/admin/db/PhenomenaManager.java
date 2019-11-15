@@ -2,48 +2,25 @@ package com.proyecto.admin.db;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
+import com.proyecto.admin.lang.BeanNotFoundException;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.entidades.Fenomeno;
 import com.proyecto.porotos.FenomenoBeanRemote;
 
-/**
- * Phenomena manager class
- *
- */
 public class PhenomenaManager {
 
-	private static FenomenoBeanRemote bean = null;
-
-	private static boolean isBeanGTG() {
-		return bean != null;
-	}
-
-	private static boolean findBean() {
+	private static FenomenoBeanRemote getBean() {
 		try {
-			bean = (FenomenoBeanRemote) InitialContext.doLookup("ProyectoPorotos/FenomenoBean!com.proyecto.porotos.FenomenoBeanRemote");
-			return true;
+			return BeanManager.get(FenomenoBeanRemote.class);
+		} catch (BeanNotFoundException e) {
+			e.printStackTrace();
 		}
-		catch (NamingException ne) {
-			Alert.error("Error", ne.getMessage());
-			ne.printStackTrace();
-			return false;
-		}
-	}
-
-	private static void findBeanifNull() {
-		if(!isBeanGTG()) {
-			findBean();
-		}
+		return null;
 	}
 
 	public static boolean create(Fenomeno f) {
-		findBeanifNull();
-
 		try {
-			return bean.create(f);
+			return getBean().create(f);
 		}
 		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -53,10 +30,8 @@ public class PhenomenaManager {
 	}
 
 	public static Fenomeno update(String name, Fenomeno f) {
-		findBeanifNull();
-
 		try {
-			return bean.update(name, f);
+			return getBean().update(name, f);
 		}
 		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -66,10 +41,8 @@ public class PhenomenaManager {
 	}
 
 	public static Fenomeno find(String name) {
-		findBeanifNull();
-
 		try {
-			return bean.find(name);
+			return getBean().find(name);
 		}
 		catch(Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -79,10 +52,8 @@ public class PhenomenaManager {
 	}
 
 	public static List<Fenomeno> getAll() {
-		findBeanifNull();
-
 		try {
-			return bean.getAll();
+			return getBean().getAll();
 		}
 		catch(Exception e) {
 			Alert.error("Error", e.getMessage());

@@ -2,43 +2,25 @@ package com.proyecto.admin.db;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
-import com.proyecto.admin.utils.Alert;
+import com.proyecto.admin.lang.BeanNotFoundException;
 import com.proyecto.entidades.Caracteristica;
 import com.proyecto.entidades.TipoDato;
 import com.proyecto.porotos.CaracteristicaBeanRemote;
 
 public class CharacteristicManager {
 
-	private static CaracteristicaBeanRemote bean = null;
-
-	private static boolean isBeanGTG() {
-		return bean != null;
-	}
-
-	private static void findBean() {
+	private static CaracteristicaBeanRemote getBean() {
 		try {
-			bean = (CaracteristicaBeanRemote) InitialContext.doLookup("ProyectoPorotos/CaracteristicaBean!com.proyecto.porotos.CaracteristicaBeanRemote");
+			return BeanManager.get(CaracteristicaBeanRemote.class);
+		} catch (BeanNotFoundException e) {
+			e.printStackTrace();
 		}
-		catch (NamingException ne) {
-			Alert.error("Error", ne.getMessage());
-			ne.printStackTrace();
-		}
-	}
-
-	private static void findBeanifNull() {
-		if(!isBeanGTG()) {
-			findBean();
-		}
+		return null;
 	}
 
 	public static boolean create(String label, TipoDato datatype) {
-		findBeanifNull();
-
 		try {
-			return bean.create(label, datatype);
+			return getBean().create(label, datatype);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -48,7 +30,7 @@ public class CharacteristicManager {
 
 	public static List<Caracteristica> getAll() {
 		try {
-			return  bean.getAll();
+			return  getBean().getAll();
 		}
 		catch(Exception e) {
 			e.printStackTrace();

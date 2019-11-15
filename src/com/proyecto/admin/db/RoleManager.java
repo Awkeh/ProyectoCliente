@@ -2,42 +2,25 @@ package com.proyecto.admin.db;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
+import com.proyecto.admin.lang.BeanNotFoundException;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.entidades.Rol;
 import com.proyecto.porotos.RolBeanRemote;
 
 public class RoleManager {
 
-	private static RolBeanRemote bean = null;
-
-	private static boolean isBeanGTG() {
-		return bean != null;
-	}
-
-	private static void findBean() {
+	private static RolBeanRemote getBean() {
 		try {
-			bean = (RolBeanRemote) InitialContext.doLookup("ProyectoPorotos/RolBean!com.proyecto.porotos.RolBeanRemote");
+			return BeanManager.get(RolBeanRemote.class);
+		} catch (BeanNotFoundException e) {
+			e.printStackTrace();
 		}
-		catch (NamingException ne) {
-			Alert.error("Error", ne.getMessage());
-			ne.printStackTrace();
-		}
-	}
-
-	private static void findBeanifNull() {
-		if(!isBeanGTG()) {
-			findBean();
-		}
+		return null;
 	}
 
 	public static boolean create(String name, int permissions) {
-		findBeanifNull();
-
 		try {
-			return bean.create(name, permissions);
+			return getBean().create(name, permissions);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -47,10 +30,8 @@ public class RoleManager {
 	}
 
 	public static Rol update(String roleName, int newPermissions) {
-		findBeanifNull();
-
 		try {
-			return bean.update(roleName, newPermissions);
+			return getBean().update(roleName, newPermissions);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -60,10 +41,8 @@ public class RoleManager {
 	}
 
 	public static Rol find(String name) {
-		findBeanifNull();
-
 		try {
-			return bean.find(name);
+			return getBean().find(name);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -73,10 +52,8 @@ public class RoleManager {
 	}
 
 	public static List<Rol> getAll() {
-		findBeanifNull();
-
 		try {
-			return bean.getAll();
+			return getBean().getAll();
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());

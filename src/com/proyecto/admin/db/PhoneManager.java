@@ -2,42 +2,25 @@ package com.proyecto.admin.db;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
+import com.proyecto.admin.lang.BeanNotFoundException;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.entidades.Telefono;
 import com.proyecto.porotos.TelefonoBeanRemote;
 
 public class PhoneManager {
 
-	private static TelefonoBeanRemote bean = null;
-
-	private static boolean isBeanGTG() {
-		return bean != null;
-	}
-
-	private static void findBean() {
+	private static TelefonoBeanRemote getBean() {
 		try {
-			bean = (TelefonoBeanRemote) InitialContext.doLookup("ProyectoPorotos/TelefonoBean!com.proyecto.porotos.TelefonoBeanRemote");
+			return BeanManager.get(TelefonoBeanRemote.class);
+		} catch (BeanNotFoundException e) {
+			e.printStackTrace();
 		}
-		catch (NamingException ne) {
-			Alert.error("Error", ne.getMessage());
-			ne.printStackTrace();
-		}
-	}
-
-	private static void findBeanifNull() {
-		if(!isBeanGTG()) {
-			findBean();
-		}
+		return null;
 	}
 
 	public static boolean create(int numb) {
-		findBeanifNull();
-
 		try {
-			return bean.create(numb);
+			return getBean().create(numb);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -47,10 +30,8 @@ public class PhoneManager {
 	}
 
 	public static Telefono update(int numb, int newNumb) {
-		findBeanifNull();
-
 		try {
-			return bean.update(numb, newNumb);
+			return getBean().update(numb, newNumb);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -60,10 +41,8 @@ public class PhoneManager {
 	}
 
 	public static Telefono find(int numb) {
-		findBeanifNull();
-
 		try {
-			return bean.find(numb);
+			return getBean().find(numb);
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
@@ -73,10 +52,8 @@ public class PhoneManager {
 	}
 
 	public static List<Telefono> getAll() {
-		findBeanifNull();
-
 		try {
-			return bean.getAll();
+			return getBean().getAll();
 		}
 		catch (Exception e) {
 			Alert.error("Error", e.getMessage());
