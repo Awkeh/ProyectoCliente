@@ -28,6 +28,16 @@ public class CharacteristicManager {
 		return false;
 	}
 
+	public static Caracteristica find(String label) {
+		try {
+			return  getBean().find(label);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static List<Caracteristica> getAll() {
 		try {
 			return  getBean().getAll();

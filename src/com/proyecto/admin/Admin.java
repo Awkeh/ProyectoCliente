@@ -33,7 +33,7 @@ public class Admin {
 	}
 
 	protected void initializeComponents() {
-		frame = new JFrame("Control panel (Este programita choto > TestLink)");
+		frame = new JFrame("Control panel");
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		menuPane = new JPanel(new GridBagLayout());
 		content = new JPanel(new GridBagLayout());
