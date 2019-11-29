@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,7 +23,6 @@ import com.proyecto.admin.db.PhenomenaManager;
 import com.proyecto.admin.modal.PhoneList;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
-
 import com.proyecto.entidades.Fenomeno;
 
 public class PhenomenaScreen extends Screen {
@@ -35,6 +36,7 @@ public class PhenomenaScreen extends Screen {
 	private JTextArea fieldDesc;
 	private JButton btnTel, btnChar, btnLoad, btnSave, btnClear;
 	private Fenomeno phenom;
+	private PhoneList ph;
 
 	public PhenomenaScreen() {
 		initializeComponents();
@@ -59,7 +61,7 @@ public class PhenomenaScreen extends Screen {
 
 		fieldDesc = new JTextArea();
 
-		btnTel = new JButton("Ver telefeonos");
+		btnTel = new JButton("Ver telefonos");
 		btnChar = new JButton("Ver caracteristicas");
 		btnLoad = new JButton("Cargar");
 		btnSave = new JButton("Guardar");
@@ -257,9 +259,15 @@ public class PhenomenaScreen extends Screen {
 	}
 
 	private void showPhoneDialog() {
-		new PhoneList(phenom);
-		System.out.println(phenom.getTelefonos().size());
-		System.gc();
+		ph = new PhoneList(phenom);
+		ph.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				ph = null;
+				System.gc();
+			}
+		});
+
+		ph.setVisible(true);
 	}
 
 	private void showCharDialog() {

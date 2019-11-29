@@ -26,7 +26,7 @@ public class Main {
 			Alert.error("ERROR", "Este programa no soporta el look and feel del sistema");
 		}
 
-		// 10 puntos para griffindor por organizar atn bien las mascaras de bits
+		// 10 puntos para griffindor por organizar tan bien las mascaras de bits
 		RoleManager.create("Administrador", Integer.MAX_VALUE);
 		RoleManager.create("Experto",
 			Rol.REVISAR_OBSERVACION 	 |
