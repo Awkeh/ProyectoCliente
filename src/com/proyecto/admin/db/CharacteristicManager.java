@@ -28,6 +28,16 @@ public class CharacteristicManager {
 		return false;
 	}
 
+	public static Caracteristica update(String label, String newLabel, TipoDato datatype) {
+		try {
+			return getBean().update(label, newLabel, datatype);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static Caracteristica find(String label) {
 		try {
 			return  getBean().find(label);

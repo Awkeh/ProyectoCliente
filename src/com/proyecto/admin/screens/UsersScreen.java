@@ -35,7 +35,7 @@ public class UsersScreen extends Screen {
 	private JLabel labId, labRol, labUser, labName, labSurname, labEmail;
 	private JTextField fieldId, fieldUser, fieldName, fieldSurname, fieldEmail;
 	private JCheckBox cbActive;
-	private JComboBox<String> selectRoles;
+	private JComboBox<String> roleChooser;
 	private JButton btnLoad, btnSave, btnClear;
 	private Usuario user;
 	private List<Rol> roles;
@@ -67,9 +67,9 @@ public class UsersScreen extends Screen {
 		cbActive = new JCheckBox("Activo");
 
 		roles = RoleManager.getAll();
-		selectRoles = new JComboBox<String>();
+		roleChooser = new JComboBox<String>();
 		for (Rol r: roles) {
-			selectRoles.addItem(r.getNombre());
+			roleChooser.addItem(r.getNombre());
 		}
 
 		btnLoad = new JButton("Cargar");
@@ -103,7 +103,7 @@ public class UsersScreen extends Screen {
 		fieldSurname.setFont(f);
 		fieldEmail.setFont(f);
 
-		selectRoles.setFont(f);
+		roleChooser.setFont(f);
 
 		btnLoad.setFont(f);
 		btnSave.setFont(f);
@@ -175,7 +175,7 @@ public class UsersScreen extends Screen {
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 2;
-		userFormPane.add(selectRoles, c);
+		userFormPane.add(roleChooser, c);
 
 		// Checkbox constraints
 		c.anchor = GridBagConstraints.CENTER;
@@ -232,7 +232,7 @@ public class UsersScreen extends Screen {
 		fieldName.setText(user.getNombre());
 		fieldSurname.setText(user.getApellido());
 		fieldEmail.setText(user.getEmail());
-		selectRoles.getModel().setSelectedItem(user.getRol().getNombre());
+		roleChooser.getModel().setSelectedItem(user.getRol().getNombre());
 		cbActive.setSelected(user.isActivo());
 	}
 
@@ -300,7 +300,7 @@ public class UsersScreen extends Screen {
 					private Rol r = null;
 					public Rol get() {
 						roles.forEach(role -> {
-							if(role.getNombre().equals(selectRoles.getSelectedItem().toString())) {
+							if(role.getNombre().equals(roleChooser.getSelectedItem().toString())) {
 								r = role;
 								return;
 							}
@@ -344,7 +344,7 @@ public class UsersScreen extends Screen {
 		fieldName.setText("");
 		fieldSurname.setText("");
 		fieldEmail.setText("");
-		selectRoles.getModel().setSelectedItem(selectRoles.getItemAt(0));
+		roleChooser.getModel().setSelectedItem(roleChooser.getItemAt(0));
 		cbActive.setSelected(false);
 	}
 
