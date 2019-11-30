@@ -48,14 +48,8 @@ public class CharacteristicManager {
 		return null;
 	}
 
-	public static List<Caracteristica> getAll() {
-		try {
-			return  getBean().getAll();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public static List<Caracteristica> getAll() throws Exception {
+		return  getBean().getAll();
 	}
 
 }

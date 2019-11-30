@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.proyecto.admin.SharedResources;
 import com.proyecto.admin.db.PhenomenaManager;
+import com.proyecto.admin.modal.CharacteristicsList;
 import com.proyecto.admin.modal.PhoneList;
 import com.proyecto.admin.utils.Alert;
 import com.proyecto.admin.utils.StringUtils;
@@ -37,6 +38,7 @@ public class PhenomenaScreen extends Screen {
 	private JButton btnTel, btnChar, btnLoad, btnSave, btnClear;
 	private Fenomeno phenom;
 	private PhoneList ph;
+	private CharacteristicsList ch;
 
 	public PhenomenaScreen() {
 		initializeComponents();
@@ -228,7 +230,7 @@ public class PhenomenaScreen extends Screen {
 			phenom.setNombre(fieldName.getText());
 			phenom.setDescripcion(fieldDesc.getText());
 
-			// FIXME: Creating / updating Phenomenas will throw persistence errors caused by the relations of the entity. It has been tested, there's no doubt. But There's no explanation as to why exactly the relations cause this persistence exception
+			// FIXME: Creating / updating Phenomenas will throw persistence errors caused by the relations of the entity. It has been tested, there's no doubt. But there's no explanation either on why exactly the relations cause this persistence exception
 
 			if(fieldId.getText().isEmpty()) {
 
@@ -261,7 +263,8 @@ public class PhenomenaScreen extends Screen {
 	private void showPhoneDialog() {
 		ph = new PhoneList(phenom);
 		ph.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+			public void windowClosed(WindowEvent e) {
+				// I bet my ass this doesn't work
 				ph = null;
 				System.gc();
 			}
@@ -271,6 +274,17 @@ public class PhenomenaScreen extends Screen {
 	}
 
 	private void showCharDialog() {
+		ch = new CharacteristicsList(phenom);
+		ch.addWindowListener(new WindowAdapter() {
+			public void windowClosed(WindowEvent e) {
+				System.out.println(phenom.getCaracteristicas().size());
+				ch = null;
+				System.gc();
+			}
+		});
+
+		ch.setVisible(true);
+
 		System.gc();
 	}
 }

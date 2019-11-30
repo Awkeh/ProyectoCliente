@@ -36,8 +36,10 @@ public class Main {
 		RoleManager.create("Voluntario",   Rol.ALTA_OBSERVACION   | Rol.MODIFICAR_OBSERVACION                         );
 
 		CharacteristicManager.create("Altitud", TipoDato.NUMERO);
-		CharacteristicManager.create("Nivel Maribel", TipoDato.NUMERO);
 		CharacteristicManager.create("Duracion", TipoDato.FECHAHORA);
+		CharacteristicManager.create("Que", TipoDato.NUMERO);
+		CharacteristicManager.create("Nivel", TipoDato.NUMERO);
+		CharacteristicManager.create("Maribel", TipoDato.NUMERO);
 
 		Admin  p = new Admin();
 		p.show();

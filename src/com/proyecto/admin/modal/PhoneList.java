@@ -57,6 +57,7 @@ public class PhoneList extends JDialog {
 		addListenersToComponents();
 
 		pack();
+		setLocationRelativeTo(null);
 	}
 
 	private void initializeComponents() {
@@ -73,8 +74,7 @@ public class PhoneList extends JDialog {
 
 	private void customizeComponents() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setTitle("Telefonos para " + f.getNombre());
+		setTitle("Telefonos para " + (f.getNombre() == null ? "fenomeno" : f.getNombre()));
 		setModal(true);
 		setLayout(new BorderLayout());
 
