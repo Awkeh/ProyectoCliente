@@ -211,6 +211,7 @@ public class PhenomenaScreen extends Screen {
 				fieldName.setText(phenom.getNombre());
 				fieldDesc.setText(phenom.getDescripcion());
 			}
+			else phenom = new Fenomeno();
 		}
 	}
 
@@ -243,8 +244,9 @@ public class PhenomenaScreen extends Screen {
 					if(f != null) {
 						fieldId.setText("" + f.getId());
 						phenom = f;
-						Alert.info("Exito", "Fenomeno creado con exito");
 					}
+					
+					Alert.info("Exito", "Fenomeno creado con exito");
 				}
 			}
 			else {
@@ -277,14 +279,11 @@ public class PhenomenaScreen extends Screen {
 		ch = new CharacteristicsList(phenom);
 		ch.addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent e) {
-				System.out.println(phenom.getCaracteristicas().size());
 				ch = null;
 				System.gc();
 			}
 		});
 
 		ch.setVisible(true);
-
-		System.gc();
 	}
 }

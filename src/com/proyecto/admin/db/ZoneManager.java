@@ -3,7 +3,6 @@ package com.proyecto.admin.db;
 import java.util.List;
 
 import com.proyecto.admin.lang.BeanNotFoundException;
-import com.proyecto.admin.utils.Alert;
 import com.proyecto.entidades.Zona;
 import com.proyecto.porotos.ZonaBeanRemote;
 
@@ -18,48 +17,20 @@ public class ZoneManager {
 		return null;
 	}
 
-	public static boolean create(String name) {
-		try {
-			return getBean().create(name);
-		}
-		catch (Exception e) {
-			Alert.error("Error", e.getMessage());
-			e.printStackTrace();
-		}
-		return false;
+	public static boolean create(Zona z) throws Exception {
+		return getBean().create(z);
 	}
 
-	public static Zona update(String name, String newName) {
-		try {
-			return getBean().update(name, newName);
-		}
-		catch (Exception e) {
-			Alert.error("Error", e.getMessage());
-			e.printStackTrace();
-		}
-		return null;
+	public static Zona update(String name, Zona z) throws Exception {
+		return getBean().update(name, z);
 	}
 
-	public static Zona find(String name) {
-		try {
-			return getBean().find(name);
-		}
-		catch (Exception e) {
-			Alert.error("Error", e.getMessage());
-			e.printStackTrace();
-		}
-		return null;
+	public static Zona find(String name) throws Exception {
+		return getBean().find(name);
 	}
 
-	public static List<Zona> getAll() {
-		try {
-			return getBean().getAll();
-		}
-		catch (Exception e) {
-			Alert.error("Error", e.getMessage());
-			e.printStackTrace();
-		}
-		return null;
+	public static List<Zona> getAll() throws Exception{
+		return getBean().getAll();
 	}
 
 }
