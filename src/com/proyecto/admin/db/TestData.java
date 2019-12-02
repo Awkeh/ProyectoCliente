@@ -19,211 +19,213 @@ public class TestData {
 
 	public static void generate() {
 		// 10 puntos para griffindor por organizar tan bien las mascaras de bits
-				RoleManager.create("Administrador", Integer.MAX_VALUE);
-				RoleManager.create("Experto",
-					Rol.REVISAR_OBSERVACION 	 |
-					Rol.ALTA_CARACTERISTICA 	 | Rol.ALTA_FENOMENO 	  | Rol.ALTA_OBSERVACION 	  | Rol.ALTA_TELEFONO 	  |
-					Rol.BAJA_CARACTERISTICA 	 | Rol.BAJA_FENOMENO 	  | Rol.BAJA_OBSERVACION 	  | Rol.BAJA_TELEFONO 	  |
-					Rol.MODIFICAR_CARACTERISTICA | Rol.MODIFICAR_FENOMENO | Rol.MODIFICAR_OBSERVACION | Rol.MODIFICAR_TELEFONO);
-				RoleManager.create("Voluntario",   Rol.ALTA_OBSERVACION   | Rol.MODIFICAR_OBSERVACION                         );
-				RoleManager.create("Dios", Integer.MAX_VALUE);
+		RoleManager.create("Administrador", Integer.MAX_VALUE);
+		RoleManager.create("Experto",
+			Rol.REVISAR_OBSERVACION 	 |
+			Rol.ALTA_CARACTERISTICA 	 | Rol.ALTA_FENOMENO 	  | Rol.ALTA_OBSERVACION 	  | Rol.ALTA_TELEFONO 	  |
+			Rol.BAJA_CARACTERISTICA 	 | Rol.BAJA_FENOMENO 	  | Rol.BAJA_OBSERVACION 	  | Rol.BAJA_TELEFONO 	  |
+			Rol.MODIFICAR_CARACTERISTICA | Rol.MODIFICAR_FENOMENO | Rol.MODIFICAR_OBSERVACION | Rol.MODIFICAR_TELEFONO);
+		RoleManager.create("Voluntario",   Rol.ALTA_OBSERVACION   | Rol.MODIFICAR_OBSERVACION                         );
+		RoleManager.create("Dios", Integer.MAX_VALUE);
 
-				try {
-					LocationManager.create("Las piedras");
-					LocationManager.create("Durazno");
-					LocationManager.create("Ciudad vieja");
-				} catch (Exception e2) {
-					e2.printStackTrace();
-					return;
-				}
+		try {
+			LocationManager.create("Las piedras");
+			LocationManager.create("Durazno");
+			LocationManager.create("Ciudad vieja");
+		} catch (Exception e2) {
+			e2.printStackTrace();
+			return;
+		}
 
-				try {
-					List<Localidad> l = new ArrayList<Localidad>();
-					l.add(LocationManager.find("Las piedras"));
+		try {
+			List<Localidad> l = new ArrayList<Localidad>();
+			l.add(LocationManager.find("Las piedras"));
 
-					Departamento d = new Departamento();
-					d.setNombre("Canelones");
-					d.setLocalidades(l);
-					DepartmentManager.create(d);
+			Departamento d = new Departamento();
+			d.setNombre("Canelones");
+			d.setLocalidades(l);
+			DepartmentManager.create(d);
 
-					l.clear();
-					l.add(LocationManager.find("Durazno"));
+			l.clear();
+			l.add(LocationManager.find("Durazno"));
 
-					d.setNombre("Durazno");
-					d.setLocalidades(l);
-					DepartmentManager.create(d);
+			d.setNombre("Durazno");
+			d.setLocalidades(l);
+			DepartmentManager.create(d);
 
-					l.clear();
-					l.add(LocationManager.find("Ciudad vieja"));
+			l.clear();
+			l.add(LocationManager.find("Ciudad vieja"));
 
-					d.setNombre("Montevideo");
-					d.setLocalidades(l);
-					DepartmentManager.create(d);
+			d.setNombre("Montevideo");
+			d.setLocalidades(l);
+			DepartmentManager.create(d);
 
-				} catch (Exception e2) {
-					e2.printStackTrace();
-					return;
-				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				return;
+			}
 
-				try {
-					List<Departamento> ds = new ArrayList<Departamento>();
+			try {
+				List<Departamento> ds = new ArrayList<Departamento>();
 
-					Zona z = new Zona();
-					z.setNombre("Norte");
-					z.setDepartamentos(ds);
+				Zona z = new Zona();
+				z.setNombre("Norte");
+				z.setDepartamentos(ds);
 
-					ds.add(DepartmentManager.find("Durazno"));
+				ZoneManager.create(z);
 
-					z.setNombre("Centro");
-					z.setDepartamentos(ds);
+				ds.add(DepartmentManager.find("Durazno"));
 
-					ZoneManager.create(z);
+				z.setNombre("Centro");
+				z.setDepartamentos(ds);
 
-					ds.clear();
-					ds.add(DepartmentManager.find("Canelones"));
-					ds.add(DepartmentManager.find("Montevideo"));
+				ZoneManager.create(z);
 
-					z.setNombre("Sur");
-					z.setDepartamentos(ds);
+				ds.clear();
+				ds.add(DepartmentManager.find("Canelones"));
+				ds.add(DepartmentManager.find("Montevideo"));
 
-					ZoneManager.create(z);
+				z.setNombre("Sur");
+				z.setDepartamentos(ds);
 
-					ds.clear();
-					z.setNombre("Este");
-					z.setDepartamentos(ds);
-					ZoneManager.create(z);
+				ZoneManager.create(z);
 
-					ds.clear();
-					z.setNombre("Oeste");
-					z.setDepartamentos(ds);
-					ZoneManager.create(z);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-					return;
-				}
+				ds.clear();
+				z.setNombre("Este");
+				z.setDepartamentos(ds);
+				ZoneManager.create(z);
 
-				Usuario u = new Usuario();
-				u.setUsuario("quacker");
-				u.setNombre("Try");
-				u.setApellido("Hard");
-				u.setEmail("duckduck@motherfucker.uy");
-				u.setRol(RoleManager.find("Dios"));
-				u.setActivo(true);
+				ds.clear();
+				z.setNombre("Oeste");
+				z.setDepartamentos(ds);
+				ZoneManager.create(z);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				return;
+			}
 
-				UserManager.create(u);
+			Usuario u = new Usuario();
+			u.setUsuario("quacker");
+			u.setNombre("Try");
+			u.setApellido("Hard");
+			u.setEmail("duckduck@motherfucker.uy");
+			u.setRol(RoleManager.find("Dios"));
+			u.setActivo(true);
 
-				u.setUsuario("admin");
-				u.setNombre("Admin");
-				u.setApellido("istrador");
-				u.setEmail("getBanned@nerd.uy");
-				u.setRol(RoleManager.find("Administrador"));
-				u.setActivo(true);
+			UserManager.create(u);
 
-				UserManager.create(u);
+			u.setUsuario("admin");
+			u.setNombre("Admin");
+			u.setApellido("istrador");
+			u.setEmail("getBanned@nerd.uy");
+			u.setRol(RoleManager.find("Administrador"));
+			u.setActivo(true);
 
-				u.setUsuario("tutor");
-				u.setNombre("Lads");
-				u.setApellido("Lasses");
-				u.setEmail("weDonKnoeShit@utec.uy");
-				u.setRol(RoleManager.find("Experto"));
-				u.setActivo(true);
+			UserManager.create(u);
 
-				UserManager.create(u);
+			u.setUsuario("tutor");
+			u.setNombre("Lads");
+			u.setApellido("Lasses");
+			u.setEmail("weDonKnoeShit@utec.uy");
+			u.setRol(RoleManager.find("Experto"));
+			u.setActivo(true);
 
-				u.setUsuario("unpibe");
-				u.setNombre("Un");
-				u.setApellido("Pibe");
-				u.setEmail("pibe@cantina.uy");
-				u.setRol(RoleManager.find("Voluntario"));
-				u.setActivo(true);
+			UserManager.create(u);
 
-				UserManager.create(u);
+			u.setUsuario("unpibe");
+			u.setNombre("Un");
+			u.setApellido("Pibe");
+			u.setEmail("pibe@cantina.uy");
+			u.setRol(RoleManager.find("Voluntario"));
+			u.setActivo(true);
 
-				CharacteristicManager.create("Altitud", TipoDato.NUMERO);
-				CharacteristicManager.create("Altura", TipoDato.NUMERO);
-				CharacteristicManager.create("Ancho", TipoDato.NUMERO);
-				CharacteristicManager.create("Densidad", TipoDato.NUMERO);
-				CharacteristicManager.create("Diametro", TipoDato.NUMERO);
-				CharacteristicManager.create("Duracion", TipoDato.FECHAHORA);
-				CharacteristicManager.create("Forma", TipoDato.TEXTO);
-				CharacteristicManager.create("Largo", TipoDato.NUMERO);
-				CharacteristicManager.create("Masa", TipoDato.NUMERO);
-				CharacteristicManager.create("Material", TipoDato.TEXTO);
-				CharacteristicManager.create("Temperatura", TipoDato.NUMERO);
-				CharacteristicManager.create("Velocidad angular", TipoDato.NUMERO);
-				CharacteristicManager.create("Viscosidad", TipoDato.NUMERO);
+			UserManager.create(u);
 
-				try {
-					PhoneManager.create(99999999);
-					PhoneManager.create(99999998);
-					PhoneManager.create(99999997);
-					PhoneManager.create(99999996);
-					PhoneManager.create(99999995);
-					PhoneManager.create(99999994);
-					PhoneManager.create(99999993);
-					PhoneManager.create(99999992);
-					PhoneManager.create(99999991);
-					PhoneManager.create(99999990);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-					return;
-				}
+			CharacteristicManager.create("Altitud", TipoDato.NUMERO);
+			CharacteristicManager.create("Altura", TipoDato.NUMERO);
+			CharacteristicManager.create("Ancho", TipoDato.NUMERO);
+			CharacteristicManager.create("Densidad", TipoDato.NUMERO);
+			CharacteristicManager.create("Diametro", TipoDato.NUMERO);
+			CharacteristicManager.create("Duracion", TipoDato.FECHAHORA);
+			CharacteristicManager.create("Forma", TipoDato.TEXTO);
+			CharacteristicManager.create("Largo", TipoDato.NUMERO);
+			CharacteristicManager.create("Masa", TipoDato.NUMERO);
+			CharacteristicManager.create("Material", TipoDato.TEXTO);
+			CharacteristicManager.create("Temperatura", TipoDato.NUMERO);
+			CharacteristicManager.create("Velocidad angular", TipoDato.NUMERO);
+			CharacteristicManager.create("Viscosidad", TipoDato.NUMERO);
 
-				try {
-					List<Caracteristica> c1 = new ArrayList<Caracteristica>();
-					c1.add(CharacteristicManager.find("Densidad"));
-					c1.add(CharacteristicManager.find("Masa"));
-					c1.add(CharacteristicManager.find("Temperatura"));
-					c1.add(CharacteristicManager.find("Viscosidad"));
+			try {
+				PhoneManager.create(99999999);
+				PhoneManager.create(99999998);
+				PhoneManager.create(99999997);
+				PhoneManager.create(99999996);
+				PhoneManager.create(99999995);
+				PhoneManager.create(99999994);
+				PhoneManager.create(99999993);
+				PhoneManager.create(99999992);
+				PhoneManager.create(99999991);
+				PhoneManager.create(99999990);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
 
-					List<Telefono> p1 = new ArrayList<Telefono>();
-					p1.add(PhoneManager.find(99999999));
-					p1.add(PhoneManager.find(99999998));
-					p1.add(PhoneManager.find(99999997));
-					p1.add(PhoneManager.find(99999996));
-					p1.add(PhoneManager.find(99999995));
+			try {
+				List<Caracteristica> c1 = new ArrayList<Caracteristica>();
+				c1.add(CharacteristicManager.find("Densidad"));
+				c1.add(CharacteristicManager.find("Masa"));
+				c1.add(CharacteristicManager.find("Temperatura"));
+				c1.add(CharacteristicManager.find("Viscosidad"));
 
-					Fenomeno f = new Fenomeno();
-					f.setNombre("Superfluido");
-					f.setDescripcion("Liquido cuya temperatura tiende a cero absoluto");
-					f.setCaracteristicas(c1);
-					f.setTelefonos(p1);
+				List<Telefono> p1 = new ArrayList<Telefono>();
+				p1.add(PhoneManager.find(99999999));
+				p1.add(PhoneManager.find(99999998));
+				p1.add(PhoneManager.find(99999997));
+				p1.add(PhoneManager.find(99999996));
+				p1.add(PhoneManager.find(99999995));
 
-					PhenomenaManager.create(f);
+				Fenomeno f = new Fenomeno();
+				f.setNombre("Superfluido");
+				f.setDescripcion("Liquido cuya temperatura tiende a cero absoluto");
+				f.setCaracteristicas(c1);
+				f.setTelefonos(p1);
 
-					c1.clear();
-					c1.add(CharacteristicManager.find("Diametro"));
-					c1.add(CharacteristicManager.find("Masa"));
+				PhenomenaManager.create(f);
 
-					p1.clear();
-					p1.add(PhoneManager.find(99999994));
-					p1.add(PhoneManager.find(99999993));
-					p1.add(PhoneManager.find(99999992));
-					p1.add(PhoneManager.find(99999991));
-					p1.add(PhoneManager.find(99999990));
+				c1.clear();
+				c1.add(CharacteristicManager.find("Diametro"));
+				c1.add(CharacteristicManager.find("Masa"));
 
-					f.setNombre("Granizo");
-					f.setDescripcion("Piedras de hielo que caen dadas las condiciones adecuadas en un dia de lluvia");
-					f.setCaracteristicas(c1);
-					f.setTelefonos(p1);
+				p1.clear();
+				p1.add(PhoneManager.find(99999994));
+				p1.add(PhoneManager.find(99999993));
+				p1.add(PhoneManager.find(99999992));
+				p1.add(PhoneManager.find(99999991));
+				p1.add(PhoneManager.find(99999990));
 
-					PhenomenaManager.create(f);
+				f.setNombre("Granizo");
+				f.setDescripcion("Piedras de hielo que caen dadas las condiciones adecuadas en un dia de lluvia");
+				f.setCaracteristicas(c1);
+				f.setTelefonos(p1);
 
-					Observacion o = new Observacion();
-					o.setDescripcion("Descripcion de la observacion");
-					o.setFechaRegistro(new Date());
-					o.setFechaRevision(o.getFechaRegistro());
-					o.setFenomeno(PhenomenaManager.find("Granizo"));
-					o.setFiabilidad(1f);
-					o.setLatitud(0f);
-					o.setLongitud(0f);
-					o.setLocalidad(LocationManager.find("Durazno"));
-					o.setReportero(UserManager.find("quacker"));
-				} catch (Exception e) {
-					e.printStackTrace();
-					return;
-				}
+				PhenomenaManager.create(f);
+
+				Observacion o = new Observacion();
+				o.setDescripcion("Descripcion de la observacion");
+				o.setFechaRegistro(new Date());
+				o.setFechaRevision(o.getFechaRegistro());
+				o.setFenomeno(PhenomenaManager.find("Granizo"));
+				o.setFiabilidad(1f);
+				o.setLatitud(0f);
+				o.setLongitud(0f);
+				o.setLocalidad(LocationManager.find("Durazno"));
+				o.setReportero(UserManager.find("quacker"));
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
 	}
 
 }
