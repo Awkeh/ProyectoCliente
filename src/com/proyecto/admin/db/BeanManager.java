@@ -67,7 +67,7 @@ public class BeanManager {
 	public static <T> T get(Class<T> _class) throws BeanNotFoundException {
 
 		if(!beans.containsKey(_class))
-			throw new BeanNotFoundException("Bean");
+			throw new BeanNotFoundException("Unknown bean " + _class.getSimpleName());
 
 		return _class.cast(getBean(_class));
 	}

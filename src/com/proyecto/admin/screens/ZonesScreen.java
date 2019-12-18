@@ -128,7 +128,6 @@ public class ZonesScreen extends Screen {
 		c.gridx = 3;
 		form.add(fieldTag, c);
 
-		// FIXME resize behavior issues
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 4;

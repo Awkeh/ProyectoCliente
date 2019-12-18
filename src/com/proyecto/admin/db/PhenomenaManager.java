@@ -3,7 +3,6 @@ package com.proyecto.admin.db;
 import java.util.List;
 
 import com.proyecto.admin.lang.BeanNotFoundException;
-import com.proyecto.admin.utils.Alert;
 import com.proyecto.entidades.Fenomeno;
 import com.proyecto.porotos.FenomenoBeanRemote;
 
@@ -18,48 +17,20 @@ public class PhenomenaManager {
 		return null;
 	}
 
-	public static boolean create(Fenomeno f) {
-		try {
-			return getBean().create(f);
-		}
-		catch(Exception e) {
-			Alert.error("Error", e.getMessage());
-			e.printStackTrace();
-			return false;
-		}
+	public static boolean create(Fenomeno f) throws Exception {
+		return getBean().create(f);
 	}
 
-	public static Fenomeno update(String name, Fenomeno f) {
-		try {
-			return getBean().update(name, f);
-		}
-		catch(Exception e) {
-			Alert.error("Error", e.getMessage());
-			e.printStackTrace();
-			return null;
-		}
+	public static Fenomeno update(String name, Fenomeno f) throws Exception {
+		return getBean().update(name, f);
 	}
 
-	public static Fenomeno find(String name) {
-		try {
-			return getBean().find(name);
-		}
-		catch(Exception e) {
-			Alert.error("Error", e.getMessage());
-			e.printStackTrace();
-			return null;
-		}
+	public static Fenomeno find(String name) throws Exception {
+		return getBean().find(name);
 	}
 
-	public static List<Fenomeno> getAll() {
-		try {
-			return getBean().getAll();
-		}
-		catch(Exception e) {
-			Alert.error("Error", e.getMessage());
-			e.printStackTrace();
-			return null;
-		}
+	public static List<Fenomeno> getAll() throws Exception {
+		return getBean().getAll();
 	}
 
 }

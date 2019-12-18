@@ -1,9 +1,11 @@
 package com.proyecto.admin.db;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.proyecto.admin.lang.BeanNotFoundException;
 import com.proyecto.entidades.Departamento;
+import com.proyecto.lang.NoResultException;
 import com.proyecto.porotos.DepartamentoBeanRemote;
 
 public class DepartmentManager {
@@ -25,11 +27,11 @@ public class DepartmentManager {
 		return getBean().update(name, d);
 	}
 
-	public static Departamento find(String name) throws Exception {
+	public static Departamento find(String name) throws NoResultException, SQLException, Exception {
 		return getBean().find(name);
 	}
 
-	public static List<Departamento> getAll() throws Exception {
+	public static List<Departamento> getAll() throws NoResultException, SQLException, Exception {
 		return getBean().getAll();
 	}
 

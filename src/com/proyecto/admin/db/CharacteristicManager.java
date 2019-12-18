@@ -18,34 +18,16 @@ public class CharacteristicManager {
 		return null;
 	}
 
-	public static boolean create(String label, TipoDato datatype) {
-		try {
-			return getBean().create(label, datatype);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+	public static boolean create(String label, TipoDato datatype) throws Exception {
+		return getBean().create(label, datatype);
 	}
 
-	public static Caracteristica update(String label, String newLabel, TipoDato datatype) {
-		try {
-			return getBean().update(label, newLabel, datatype);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public static Caracteristica update(String label, String newLabel, TipoDato datatype) throws Exception {
+		return getBean().update(label, newLabel, datatype);
 	}
 
-	public static Caracteristica find(String label) {
-		try {
-			return  getBean().find(label);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public static Caracteristica find(String label) throws Exception {
+		return getBean().find(label);
 	}
 
 	public static List<Caracteristica> getAll() throws Exception {

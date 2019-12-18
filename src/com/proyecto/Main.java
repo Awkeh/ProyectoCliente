@@ -1,8 +1,7 @@
 package com.proyecto;
 
-import java.util.List;
-
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -10,11 +9,18 @@ import com.proyecto.admin.Admin;
 import com.proyecto.admin.db.DepartmentManager;
 import com.proyecto.admin.db.TestData;
 import com.proyecto.admin.utils.Alert;
-import com.proyecto.entidades.Departamento;
 
 public class Main {
 
 	// TODO: Add catch for javax.persistence.NoResultException where needed
+	// Razones por la que lanza error de que no sepudo leer la respuesta:
+	// 1) Uno o mas tipos de los atributos de la entidad no implementan serializable
+	// 2) unknown
+	//
+	// TODO: Refactor FenomenoBean so as to get by id because nombre is not unique
+	//
+	// FIXME: find method from DepartamentoBean. Error: failed to read response
+	// FOXME: getAll method from FenomenoBeanRemote. Error: failed to read response
 
 	public static void main(String[] args) {
 
@@ -30,19 +36,16 @@ public class Main {
 			Alert.error("ERROR", "Este programa no soporta el look and feel del sistema");
 		}
 
+		// Should use invokeLater, though it works, so meh
 		if(JOptionPane.showConfirmDialog(null, "Generar conjunto de datos de pruebas?", "Datos de prueba", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
 			TestData.generate();
 
-		Departamento d = null;
-		try {
-			d = DepartmentManager.find("Durazno");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Alert.info("Y? que paso vieja", (d == null ? "Nah, sigue sin funcionar la pija esta" : "Alfin la concha de tu vieja, funciona"));
+//		System.out.println(100f / 42f);
+//		System.out.println(((int) 100 / (int) 42) * 42);
 
-		Admin  p = new Admin();
-		p.show();
+//		Admin  p = new Admin();
+//		p.show();
+
 	}
 
 }
